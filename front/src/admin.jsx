@@ -11,16 +11,16 @@ const Admin = () => {
   }, []);
 
   const fetchFlashcards = async () => {
-    const res = await axios.get('http://localhost:5000/flashcards');
+    const res = await axios.get('https://flash-card-react-ten.vercel.app/flashcards');
     setFlashcards(res.data);
   };
 
   const createOrUpdateFlashcard = async () => {
     if (editing) {
-      await axios.put(`http://localhost:5000/flashcards/${editing}`, newFlashcard);
+      await axios.put(`https://flash-card-react-ten.vercel.app/flashcards/${editing}`, newFlashcard);
       setEditing(null);
     } else {
-      await axios.post('http://localhost:5000/flashcards', newFlashcard);
+      await axios.post('https://flash-card-react-ten.vercel.app/flashcards', newFlashcard);
     }
     setNewFlashcard({ question: '', options: ['', '', '', ''], answer: '' });
     fetchFlashcards();
@@ -32,14 +32,14 @@ const Admin = () => {
   };
 
   const deleteFlashcard = async (id) => {
-    await axios.delete(`http://localhost:5000/flashcards/${id}`);
+    await axios.delete(`https://flash-card-react-ten.vercel.app/flashcards/${id}`);
     fetchFlashcards();
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-green-400 via-blue-500 to-purple-500">
-      <div className="w-full max-w-lg p-8 bg-white shadow-2xl rounded-xl">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6">Admin Panel</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-purple-800 text-white">
+      <div className="w-full max-w-lg p-8 bg-purple-700 shadow-2xl rounded-xl">
+        <h2 className="text-2xl font-bold mb-6">Admin Panel</h2>
         <input
           type="text"
           placeholder="Question"
@@ -73,15 +73,15 @@ const Admin = () => {
         />
         <button
           onClick={createOrUpdateFlashcard}
-          className="w-full mt-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+          className="w-full mt-6 py-3 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition"
         >
           {editing ? 'Update' : 'Create'} Flashcard
         </button>
 
         <ul className="mt-8 space-y-4">
           {flashcards.map((flashcard) => (
-            <li key={flashcard._id} className="p-4 bg-gray-100 rounded-lg shadow">
-              <p className="text-gray-800 font-medium">{flashcard.question}</p>
+            <li key={flashcard._id} className="p-4 bg-purple-600 rounded-lg shadow">
+              <p className="text-white font-medium">{flashcard.question}</p>
               <div className="flex mt-2 space-x-2">
                 <button
                   onClick={() => editFlashcard(flashcard)}
@@ -91,7 +91,7 @@ const Admin = () => {
                 </button>
                 <button
                   onClick={() => deleteFlashcard(flashcard._id)}
-                  className="px-4 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition"
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg shadow hover:bg-red-600 transition"
                 >
                   Delete
                 </button>
