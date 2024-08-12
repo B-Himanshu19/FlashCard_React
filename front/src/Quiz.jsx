@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ReactCardFlip from 'react-card-flip';
+import { useSwipeable } from 'react-swipeable';
 
 const Quiz = () => {
   const [flashcards, setFlashcards] = useState([]);
@@ -48,10 +49,22 @@ const Quiz = () => {
     setIsFlipped(false);
   };
 
+  const handleSwipe = () => {
+    submitAnswer();
+  };
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => nextQuestion(),
+    onSwipedRight: () => prevQuestion(),
+    onSwipedUp: () => handleSwipe(),
+    onSwipedDown: () => handleSwipe(),
+    trackMouse: true
+  });
+
   if (flashcards.length === 0) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
+    <div {...handlers} className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         {/* Front of the card */}
         <div className="bg-white rounded-lg shadow-lg p-8 mx-auto max-w-2xl">
