@@ -72,10 +72,10 @@ const Quiz = () => {
         </div>
 
         {/* Back of the card */}
-        <div className={`rounded-lg shadow-lg p-8 mx-auto max-w-2xl ${result ? 'bg-green-500' : 'bg-red-500'} text-white`}>
+        <div className={`rounded-lg shadow-lg p-8 mx-auto max-w-2xl ${result === true ? 'bg-green-500' : 'bg-red-500'} text-white`}>
           <div className="mb-6">
             <p className="text-2xl font-bold mb-4">
-              {result ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
+              {result === true ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
             </p>
           </div>
           <div className="mt-8 flex justify-end space-x-4">
