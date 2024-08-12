@@ -1,87 +1,93 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import ReactCardFlip from 'react-card-flip';
 
 const Quiz = () => {
   const [flashcards, setFlashcards] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState('');
   const [result, setResult] = useState(null);
+  const [isFlipped, setIsFlipped] = useState(false);
 
   useEffect(() => {
     fetchFlashcards();
   }, []);
 
   const fetchFlashcards = async () => {
-    const res = await axios.get('https://flash-card-react-ten.vercel.app/flashcards');
+    const res = await axios.get('https://flashcards-2b7m.vercel.app/flashcards');
     setFlashcards(res.data);
   };
 
   const submitAnswer = async () => {
-    const res = await axios.post(`https://flash-card-react-ten.vercel.app/flashcards/${flashcards[currentIndex]._id}/answer`, {
+    const res = await axios.post(`https://flashcards-2b7m.vercel.app/flashcards/${flashcards[currentIndex]._id}/answer`, {
       selectedOption,
     });
     setResult(res.data.isCorrect);
+    setIsFlipped(true);
   };
 
   const nextQuestion = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
     setSelectedOption('');
     setResult(null);
+    setIsFlipped(false);
   };
 
   if (flashcards.length === 0) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-purple-800 text-white">
-      <div className="w-full max-w-md p-8 bg-purple-700 shadow-2xl rounded-xl">
-        <div className="mb-6">
-          <p className="text-xl font-bold mb-6">{flashcards[currentIndex].question}</p>
-          <div className="space-y-4">
-            {flashcards[currentIndex].options.map((option, index) => (
-              <div key={index} className="flex items-center">
-                <input
-                  type="radio"
-                  name="option"
-                  value={option}
-                  id={`option-${index}`}
-                  checked={selectedOption === option}
-                  onChange={(e) => setSelectedOption(e.target.value)}
-                  className="h-5 w-5 text-indigo-400 focus:ring-indigo-300 border-gray-300 rounded-full"
-                />
-                <label htmlFor={`option-${index}`} className="ml-3 text-lg">
-                  {option}
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {result !== null && (
+      <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+        {/* Front of the card */}
+        <div className="bg-white rounded-lg shadow-lg p-8 mx-auto max-w-2xl text-gray-900">
           <div className="mb-6">
-            <p className="text-lg font-semibold">
-              {result ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
-            </p>
+            <p className="text-2xl font-bold mb-4">{flashcards[currentIndex].question}</p>
+            <div className="space-y-4">
+              {flashcards[currentIndex].options.map((option, index) => (
+                <div key={index} className="flex items-center">
+                  <input
+                    type="radio"
+                    name="option"
+                    value={option}
+                    id={`option-${index}`}
+                    checked={selectedOption === option}
+                    onChange={(e) => setSelectedOption(e.target.value)}
+                    className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded-full"
+                  />
+                  <label htmlFor={`option-${index}`} className="ml-3 text-lg">
+                    {option}
+                  </label>
+                </div>
+              ))}
+            </div>
           </div>
-        )}
-
-        <div className="mt-8 flex justify-between space-x-4">
-          {result === null ? (
+          <div className="mt-8 flex justify-end space-x-4">
             <button
               onClick={submitAnswer}
-              className="w-full px-6 py-3 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition"
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition"
             >
               Submit Answer
             </button>
-          ) : (
+          </div>
+        </div>
+
+        {/* Back of the card */}
+        <div className={`bg-${result ? 'green' : 'red'}-500 rounded-lg shadow-lg p-8 mx-auto max-w-2xl text-white`}>
+          <div className="mb-6">
+            <p className="text-2xl font-bold mb-4">
+              {result ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
+            </p>
+          </div>
+          <div className="mt-8 flex justify-end space-x-4">
             <button
               onClick={nextQuestion}
-              className="w-full px-6 py-3 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition"
             >
               Next Question
             </button>
-          )}
+          </div>
         </div>
-      </div>
+      </ReactCardFlip>
     </div>
   );
 };
