@@ -22,12 +22,7 @@ function App() {
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/quiz"
-                  className="hover:text-yellow-300 transition"
-                >
-                  Quiz
-                </Link>
+             
               </li>
             </ul>
           </div>
@@ -36,7 +31,7 @@ function App() {
         <div className="container mx-auto px-6 py-10">
           <Routes>
             <Route path="/admin" element={<Admin />} />
-            <Route path="/quiz" element={<Quiz />} />
+            <Route path="/" element={<Quiz />} />
           </Routes>
         </div>
 
