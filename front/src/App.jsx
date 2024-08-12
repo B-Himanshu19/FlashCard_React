@@ -8,8 +8,8 @@ function App() {
   const location = useLocation();
 
   return (
-    <div className="min-h-screen bg-gray-100 text-gray-900">
-      <nav className="bg-purple-700 text-white shadow-lg">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <nav className="bg-blue-600 text-white shadow-lg">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="text-lg font-semibold">
             Flashcard Quiz App
@@ -46,7 +46,7 @@ function App() {
         </Routes>
       </div>
 
-      <footer className="bg-purple-700 text-white py-4 text-center">
+      <footer className="bg-blue-600 text-white py-4 text-center">
         © 2024 Flashcard Quiz App. All rights reserved.
       </footer>
     </div>
