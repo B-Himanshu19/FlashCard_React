@@ -12,12 +12,12 @@ const Quiz = () => {
   }, []);
 
   const fetchFlashcards = async () => {
-    const res = await axios.get('http://localhost:5000/flashcards');
+    const res = await axios.get('https://flash-card-react-ten.vercel.app/flashcards');
     setFlashcards(res.data);
   };
 
   const submitAnswer = async () => {
-    const res = await axios.post(`http://localhost:5000/flashcards/${flashcards[currentIndex]._id}/answer`, {
+    const res = await axios.post(`https://flash-card-react-ten.vercel.app/flashcards/${flashcards[currentIndex]._id}/answer`, {
       selectedOption,
     });
     setResult(res.data.isCorrect);
@@ -32,10 +32,10 @@ const Quiz = () => {
   if (flashcards.length === 0) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-400 via-pink-500 to-red-500">
-      <div className="w-full max-w-md p-8 bg-white shadow-2xl rounded-xl">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-purple-800 text-white">
+      <div className="w-full max-w-md p-8 bg-purple-700 shadow-2xl rounded-xl">
         <div className="mb-6">
-          <p className="text-xl font-bold text-gray-800 mb-6">{flashcards[currentIndex].question}</p>
+          <p className="text-xl font-bold mb-6">{flashcards[currentIndex].question}</p>
           <div className="space-y-4">
             {flashcards[currentIndex].options.map((option, index) => (
               <div key={index} className="flex items-center">
@@ -46,9 +46,9 @@ const Quiz = () => {
                   id={`option-${index}`}
                   checked={selectedOption === option}
                   onChange={(e) => setSelectedOption(e.target.value)}
-                  className="h-5 w-5 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded-full"
+                  className="h-5 w-5 text-indigo-400 focus:ring-indigo-300 border-gray-300 rounded-full"
                 />
-                <label htmlFor={`option-${index}`} className="ml-3 text-lg text-gray-700">
+                <label htmlFor={`option-${index}`} className="ml-3 text-lg">
                   {option}
                 </label>
               </div>
@@ -58,7 +58,7 @@ const Quiz = () => {
 
         {result !== null && (
           <div className="mb-6">
-            <p className="text-lg font-semibold text-gray-800">
+            <p className="text-lg font-semibold">
               {result ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
             </p>
           </div>
@@ -68,14 +68,14 @@ const Quiz = () => {
           {result === null ? (
             <button
               onClick={submitAnswer}
-              className="w-full px-6 py-3 bg-indigo-600 text-white rounded-lg shadow hover:bg-indigo-700 transition"
+              className="w-full px-6 py-3 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition"
             >
               Submit Answer
             </button>
           ) : (
             <button
               onClick={nextQuestion}
-              className="w-full px-6 py-3 bg-green-600 text-white rounded-lg shadow hover:bg-green-700 transition"
+              className="w-full px-6 py-3 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
             >
               Next Question
             </button>
