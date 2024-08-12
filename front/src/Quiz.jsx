@@ -36,10 +36,10 @@ const Quiz = () => {
   if (flashcards.length === 0) return <p className="text-center mt-10 text-gray-600">Loading...</p>;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-r from-purple-600 to-purple-800 text-white">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 text-gray-900">
       <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
         {/* Front of the card */}
-        <div className="bg-white rounded-lg shadow-lg p-8 mx-auto max-w-2xl text-gray-900">
+        <div className="bg-white rounded-lg shadow-lg p-8 mx-auto max-w-2xl">
           <div className="mb-6">
             <p className="text-2xl font-bold mb-4">{flashcards[currentIndex].question}</p>
             <div className="space-y-4">
@@ -52,7 +52,7 @@ const Quiz = () => {
                     id={`option-${index}`}
                     checked={selectedOption === option}
                     onChange={(e) => setSelectedOption(e.target.value)}
-                    className="h-5 w-5 text-purple-600 focus:ring-purple-500 border-gray-300 rounded-full"
+                    className="h-5 w-5 text-blue-600 focus:ring-blue-500 border-gray-300 rounded-full"
                   />
                   <label htmlFor={`option-${index}`} className="ml-3 text-lg">
                     {option}
@@ -64,7 +64,7 @@ const Quiz = () => {
           <div className="mt-8 flex justify-end space-x-4">
             <button
               onClick={submitAnswer}
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
             >
               Submit Answer
             </button>
@@ -72,7 +72,7 @@ const Quiz = () => {
         </div>
 
         {/* Back of the card */}
-        <div className={`bg-${result ? 'green' : 'red'}-500 rounded-lg shadow-lg p-8 mx-auto max-w-2xl text-white`}>
+        <div className={`rounded-lg shadow-lg p-8 mx-auto max-w-2xl ${result ? 'bg-green-500' : 'bg-red-500'} text-white`}>
           <div className="mb-6">
             <p className="text-2xl font-bold mb-4">
               {result ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
@@ -81,7 +81,7 @@ const Quiz = () => {
           <div className="mt-8 flex justify-end space-x-4">
             <button
               onClick={nextQuestion}
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg shadow hover:bg-purple-700 transition"
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
             >
               Next Question
             </button>
