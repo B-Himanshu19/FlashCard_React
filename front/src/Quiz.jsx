@@ -27,7 +27,22 @@ const Quiz = () => {
   };
 
   const nextQuestion = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % flashcards.length);
+    if (currentIndex < flashcards.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    } else {
+      setCurrentIndex(0); // Loop back to the first question if at the end
+    }
+    setSelectedOption('');
+    setResult(null);
+    setIsFlipped(false);
+  };
+
+  const prevQuestion = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    } else {
+      setCurrentIndex(flashcards.length - 1); // Loop to the last question if at the beginning
+    }
     setSelectedOption('');
     setResult(null);
     setIsFlipped(false);
@@ -61,12 +76,24 @@ const Quiz = () => {
               ))}
             </div>
           </div>
-          <div className="mt-8 flex justify-end space-x-4">
+          <div className="mt-8 flex justify-between space-x-4">
+            <button
+              onClick={prevQuestion}
+              className="px-6 py-3 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 transition"
+            >
+              Previous
+            </button>
             <button
               onClick={submitAnswer}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
             >
               Submit Answer
+            </button>
+            <button
+              onClick={nextQuestion}
+              className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
+            >
+              Next
             </button>
           </div>
         </div>
@@ -78,12 +105,18 @@ const Quiz = () => {
               {result === true ? 'Correct!' : `Incorrect! The correct answer is: ${flashcards[currentIndex].answer}`}
             </p>
           </div>
-          <div className="mt-8 flex justify-end space-x-4">
+          <div className="mt-8 flex justify-between space-x-4">
+            <button
+              onClick={prevQuestion}
+              className="px-6 py-3 bg-gray-600 text-white rounded-lg shadow hover:bg-gray-700 transition"
+            >
+              Previous
+            </button>
             <button
               onClick={nextQuestion}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg shadow hover:bg-blue-700 transition"
             >
-              Next Question
+              Next
             </button>
           </div>
         </div>
